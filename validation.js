@@ -13,10 +13,9 @@ ejs.renderFile(
     var validationLocked = []
 
     params.views[_wizard_view_validation_index].validate = function(){
-      if(params.views.filter(v => !v.isOk() || form_params[v.name].ignore).length > 0){
+      if(params.views.filter(v => v.isOk() === false && form_params[v.name].ignore !== true).length > 0){
         return
       }
-      console.log('VALIDATE')
       validationLockAction()
       document.getElementById('validation_please_wait').classList.add('is-visible')
 
@@ -24,8 +23,7 @@ ejs.renderFile(
       var promisesIndex = []
 
       for(var i in params.views){
-        if(i != _wizard_view_validation_index && typeof params.views[i].post === 'function'){
-          console.log(params.views[i].name)
+        if(i != _wizard_view_validation_index && typeof params.views[i].post === 'function' && form_params[params.views[i].name].ignore !== true){
           promises.push(params.views[i].post().then(resp => Object.assign({ success: true, data: resp })).catch(err => Object.assign({ success: false, data: err })))
           promisesIndex.push(i)
         }
@@ -145,7 +143,7 @@ ejs.renderFile(
 
       var _validateButton = document.getElementById('wizard_validation_form_validate')
       if(_validateButton){
-        if(params.views.filter(v => !v.isOk() || form_params[v.name].ignore).length === 0){
+        if(params.views.filter(v => v.isOk() === false && form_params[v.name].ignore !== true).length === 0){
           _validateButton.classList.remove('disabled')
         } else {
           _validateButton.classList.add('disabled')
