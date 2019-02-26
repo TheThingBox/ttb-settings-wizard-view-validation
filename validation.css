@@ -1,0 +1,7 @@
+#validation_please_wait {
+  display: none;
+}
+
+#validation_please_wait.is-visible {
+  display: block;
+}
