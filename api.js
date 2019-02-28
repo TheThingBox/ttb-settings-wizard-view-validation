@@ -31,18 +31,24 @@ function init(app, apiToExpose, persistenceDir) {
   });
 }
 
-function syncStats(){
+function syncStats(update){
   if(!settingsPath){
     return
   }
+  var statsFromFile
   try {
-    stats = JSON.parse(fs.readFileSync(settingsPath))
+    statsFromFile = JSON.parse(fs.readFileSync(settingsPath))
+    if(update === true){
+      stats = Object.assign({}, statsFromFile, stats)
+    } else {
+      stats = Object.assign({}, stats, statsFromFile)
+    }
   } catch(e){
     try {
       fs.writeFileSync(settingsPath, JSON.stringify(stats, null, 4), { encoding: 'utf8'})
     } catch(e){}
   }
-  if(stats.initialized === false){
+  if(stats.initialized === false || update === true){
     stats.initialized = true
     try {
       fs.writeFileSync(settingsPath, JSON.stringify(stats, null, 4), { encoding: 'utf8'})

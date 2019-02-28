@@ -39,13 +39,53 @@ ejs.renderFile(
         })
         var _done = datas.filter( d => d.success === true)
         var _fail = datas.filter( d => d.success === false)
-        console.log('done', _done)
-        console.log('fail', _fail)
-      });
 
-      setTimeout(()=> {
-        validationUnlockAction()
-      }, 5000)
+        if(_fail.length !== 0){
+          for(var i in _fail){
+            var _msg = ''
+            if(isObject(_fail[i].data) && _fail[i].data.hasOwnProperty('message')){
+              _msg = _fail[i].data.message
+            } else {
+              _msg = `An error occured validating the ${params.views[_fail[i].index].name}`
+            }
+            M.toast({html: `<b>Error: ${_msg}</b><button onclick="M.Toast.getInstance(document.querySelector('.toast_e${i}')).dismiss()" style="margin-left: 16px;font-weight:500; margin-right:-14px;" class="btn-flat blue-grey darken-1 white-text">Ok</button>`, displayLength: 500000, classes: `toast_e${i} ttb-color-orange`})
+          }
+          setTimeout(()=> {
+            validationUnlockAction()
+          }, 1000)
+        } else {
+          for(var i in _done){
+            var _msg = ''
+            if(isObject(_done[i].data) && _done[i].data.hasOwnProperty('message')){
+              _msg = _done[i].data.message
+            } else {
+              _msg = `The ${params.views[_done[i].index].name} was successfully validated`
+            }
+            M.toast({html: `<b>${_msg}</b><button onclick="M.Toast.getInstance(document.querySelector('.toast_e${i}')).dismiss()" style="margin-left: 16px;font-weight:500; margin-right:-14px;" class="btn-flat blue-grey darken-1 white-text">Ok</button>`, displayLength: 500000, classes: `toast_e${i} ttb-color-green blue-grey-text text-darken-1`})
+
+            var _needToSentence = ''
+            if(validation_on_validate_needTo === 'none'){
+              _needToSentence = ''
+            } else if(validation_on_validate_needTo === 'restart'){
+              _needToSentence = 'The device has to restart some application.<br> The operation can take a minute.<br>'
+            } else {
+              _needToSentence = 'The device has to restart himself.<br> The operation can take up to five minutes.<br>'
+            }
+            M.toast({html: `<b>All settings was successfully set.<br>${_needToSentence}You will be redirected as soon as possible.</b>`, displayLength: 500000, classes: `ttb-color-green blue-grey-text text-darken-1`})
+            if(validation_on_validate_needTo === 'none'){
+              setTimeout( () => {
+                window.location = '/'
+              }, 3000)
+            } else if(validation_on_validate_needTo === 'restart'){
+              console.log('restart')
+              //(new Request('/settings_wizard/restart')).post()
+            } else if(validation_on_validate_needTo === 'reboot'){
+              console.log('reboot')
+              //(new Request('/settings_wizard/reboot')).post()
+            }
+          }
+        }
+      });
     }
 
     var view_li = document.getElementsByClassName(`tab_${params.views[_wizard_view_validation_index].order}`);
@@ -105,7 +145,7 @@ ejs.renderFile(
       _innerHTML = `${_innerHTML}
       </ul>`
 
-      var _needTo = params.views.map( v => v.stats.validateAction || 'none').sort( (a, b) => {
+      var _needTo = params.views.filter(v => v.isOk() === true && form_params[v.name].ignore !== true).map( v => v.stats.validateAction || 'none').sort( (a, b) => {
         var _correspondance = ['none', 'restart', 'reboot']
         var _a =_correspondance.indexOf(a)
         var _b =_correspondance.indexOf(b)
@@ -136,6 +176,14 @@ ejs.renderFile(
             <div class="card blue-grey darken-1">
               <div class="card-content white-text">
               ${_needToSentence}
+              </div>
+            </div>
+`
+      } else {
+        _innerHTML = `${_innerHTML}
+            <div id="validation_please_wait" class="card blue-grey darken-1">
+              <div class="card-content white-text">
+                <div>Please wait, you will be automatically redirected when your device will be ready.</div>
               </div>
             </div>
 `
