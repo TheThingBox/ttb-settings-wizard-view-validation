@@ -5,3 +5,13 @@
 #validation_please_wait.is-visible {
   display: block;
 }
+
+.validation_container {
+  min-width: 400px;
+}
+
+@media (max-width: 600px) {
+  .validation_container {
+    min-width: 200px;
+  }
+}
