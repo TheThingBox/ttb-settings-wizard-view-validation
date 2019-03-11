@@ -166,7 +166,7 @@ var VIEW_VALIDATION = function() {
         _innerHTML = `${_innerHTML}
           <li class="collection-item avatar" style="min-height:20px !important;${_backgroundColor}">
             <i class="material-icons circle ttb-color-${(_ignore===true)?'purple':'green'}" style="${_color}">${(_ignore===true)?'priority_high':'check'}</i>
-            <span class="title">${modules[i].type.toUpperCase()}</span>
+            <span class="title">${modules[i].instance.tab_name}</span>
             <p>${modules[i].instance.getResumed()}</p>
           </li>
         `
