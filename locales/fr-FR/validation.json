@@ -1,0 +1,15 @@
+{
+  "name": "validation",
+  "list_title": "Liste des paramètres à valider",
+  "tips_restart": "Une fois paramétré, l'équipement devra relancer certaines applications.<br>Cette opération peut prendre une minute.",
+  "tips_reboot": "Une fois paramétré, l'équipement devra redémarrer.<br>Cette opération peut prendre jusqu'à cinq minutes.",
+  "tips_please_wait": "Veuillez patienter, vous allez être redirigé dès que possible.",
+  "validate_error": "Une erreur est survenue en validant de la page %{name}",
+  "error": "Erreur",
+  "validated_success": "La page %{name} a été correctement validé",
+  "button_ok": "Ok",
+  "validate_done": "Tous les paramètres ont été correctement appliqués.",
+  "validate_restart": "L'équipement va relancer certaines applications.<br>Cette opération peut prendre une minute.<br>",
+  "validate_reboot": "l'équipement va redémarrer.<br>Cette opération peut prendre jusqu'à cinq minutes.<br>",
+  "validate_redirect": "Vous allez être redirigé dès que possible."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "validation",
+  "list_title": "List of settings to validate",
+  "tips_restart": "On validation, the device has to restart some application.<br/>The operation can take a minute.",
+  "tips_reboot": "On validation, the device has to restart himself.<br/>The operation can take up to five minutes.",
+  "tips_please_wait": "Please wait, you will be automatically redirected when your device will be ready.",
+  "validate_error": "An error occured validating the %{name}",
+  "error": "Error",
+  "validated_success": "The %{name} was successfully validated",
+  "button_ok": "Ok",
+  "validate_done": "All settings was successfully set.",
+  "validate_restart": "The device has to restart some application.<br> The operation can take a minute.<br>",
+  "validate_reboot": "The device has to restart himself.<br> The operation can take up to five minutes.<br>",
+  "validate_redirect": "You will be redirected as soon as possible."
+}
