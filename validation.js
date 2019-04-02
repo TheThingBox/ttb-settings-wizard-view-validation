@@ -74,7 +74,9 @@ var VIEW_VALIDATION = function() {
         if(typeof modules[i].instance.post === 'function' && modules[i].instance.form.ignore !== true){
           promises.push(modules[i].instance.post()
             .then(resp => {
-              if(resp.message && resp.message.toUpperCase() === 'OK'){
+              if(resp === true){
+                return { success: true, data: null }
+              } else if(resp.message && resp.message.toUpperCase() === 'OK'){
                 return { success: true, data: resp }
               }
               return { success: false, data: resp }
@@ -111,13 +113,15 @@ var VIEW_VALIDATION = function() {
         }, 1000)
       } else {
         for(var i in _done){
-          var _msg = ''
-          if(isObject(_done[i].data) && _done[i].data.hasOwnProperty('key')){
-            _msg = modules[_done[i].index].instance.lang(_done[i].data.key, _done[i].data.params || {})
-          } else {
-            _msg = this.lang('validated_success', { name: modules[_done[i].index].instance.type})
+          if(_done[i].data !== null){
+            var _msg = ''
+            if(isObject(_done[i].data) && _done[i].data.hasOwnProperty('key')){
+              _msg = modules[_done[i].index].instance.lang(_done[i].data.key, _done[i].data.params || {})
+            } else {
+              _msg = this.lang('validated_success', { name: modules[_done[i].index].instance.type})
+            }
+            M.toast({html: `<b>${_msg}</b><button onclick="M.Toast.getInstance(document.querySelector('.toast_e${i}')).dismiss()" style="margin-left: 16px;font-weight:500; margin-right:-14px;" class="btn-flat blue-grey darken-1 white-text">${this.lang('button_ok')}</button>`, displayLength: 500000, classes: `toast_e${i} ttb-color-green blue-grey-text text-darken-1`})
           }
-          M.toast({html: `<b>${_msg}</b><button onclick="M.Toast.getInstance(document.querySelector('.toast_e${i}')).dismiss()" style="margin-left: 16px;font-weight:500; margin-right:-14px;" class="btn-flat blue-grey darken-1 white-text">${this.lang('button_ok')}</button>`, displayLength: 500000, classes: `toast_e${i} ttb-color-green blue-grey-text text-darken-1`})
         }
         var _needToSentence = ''
         if(this.on_validate_needTo === 'none'){
@@ -161,7 +165,7 @@ var VIEW_VALIDATION = function() {
           _backgroundColor = 'background-color: #F1F1F1;'
         }
         if(_ignore !== true){
-          _color='color: #454545 !important;'
+          _color = 'color: #454545 !important;'
         }
         _innerHTML = `${_innerHTML}
           <li class="collection-item avatar" style="min-height:20px !important;${_backgroundColor}">
