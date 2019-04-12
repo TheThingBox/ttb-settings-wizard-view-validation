@@ -4,7 +4,7 @@
   "tips_restart": "Une fois paramétré, l'équipement devra relancer certaines applications.<br>Cette opération peut prendre une minute.",
   "tips_reboot": "Une fois paramétré, l'équipement devra redémarrer.<br>Cette opération peut prendre jusqu'à cinq minutes.",
   "tips_please_wait": "Veuillez patienter, vous allez être redirigé dès que possible.",
-  "validate_error": "Une erreur est survenue en validant de la page %{name}",
+  "validate_error": "Une erreur est survenue en validant la page %{name}",
   "error": "Erreur",
   "validated_success": "La page %{name} a été correctement validé",
   "button_ok": "Ok",

@@ -104,7 +104,7 @@ var VIEW_VALIDATION = function() {
           if(isObject(_fail[i].data) && _fail[i].data.hasOwnProperty('key')){
             _msg = modules[_fail[i].index].instance.lang(_fail[i].data.key, _fail[i].data.params || {})
           } else {
-            _msg = this.lang('validate_error', { name: modules[_fail[i].index].instance.type})
+            _msg = this.lang('validate_error', { name: modules[_fail[i].index].instance.lang('name')})
           }
           M.toast({html: `<b>${this.lang('error')}: ${_msg}</b><button onclick="M.Toast.getInstance(document.querySelector('.toast_e${i}')).dismiss()" style="margin-left: 16px;font-weight:500; margin-right:-14px;" class="btn-flat blue-grey darken-1 white-text">${this.lang('button_ok')}</button>`, displayLength: 500000, classes: `toast_e${i} ttb-color-orange`})
         }
@@ -118,7 +118,7 @@ var VIEW_VALIDATION = function() {
             if(isObject(_done[i].data) && _done[i].data.hasOwnProperty('key')){
               _msg = modules[_done[i].index].instance.lang(_done[i].data.key, _done[i].data.params || {})
             } else {
-              _msg = this.lang('validated_success', { name: modules[_done[i].index].instance.type})
+              _msg = this.lang('validated_success', { name: modules[_done[i].index].instance.lang('name')})
             }
             M.toast({html: `<b>${_msg}</b><button onclick="M.Toast.getInstance(document.querySelector('.toast_e${i}')).dismiss()" style="margin-left: 16px;font-weight:500; margin-right:-14px;" class="btn-flat blue-grey darken-1 white-text">${this.lang('button_ok')}</button>`, displayLength: 500000, classes: `toast_e${i} ttb-color-green blue-grey-text text-darken-1`})
           }
